@@ -1,4 +1,7 @@
 defmodule TaxValue do
+	@typedoc"""
+	Tax information for a given year; TaxValues belong to Buildings in its internal tax_values map and accessed with a key of its given year
+	"""
 	
 	defstruct [
 		:building_type, :gross_value, :taxed_value, 
