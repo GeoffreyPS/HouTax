@@ -1,5 +1,5 @@
 defmodule Building do
-	@typedoc"""
+	@moduledoc"""
 	Serves as the main data structure for a given address. tax_values holds a map of TaxValues with years as a key.
 	"""
 	defstruct [
