@@ -14,7 +14,9 @@ defmodule TaxValue.DeltaFuns do
 	end
 
 
-
+	@doc"""
+	Accepts a Building struct that contains nested TaxValue structs and returns Building with Annual Delta fields calcualted.
+	"""
 	@spec find_annual_deltas(%Building{}) :: %Building{}
 	def find_annual_deltas(building) when is_map(building) do
 		%Building{tax_values: tax_values} = building
