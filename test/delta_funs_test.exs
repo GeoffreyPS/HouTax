@@ -29,7 +29,7 @@ defmodule DeltaFunsTest do
       2013 => %TaxValue{annual_delta: ad_2013}, 
       2014 => %TaxValue{annual_delta: ad_2014}} = Map.get(TaxValue.DeltaFuns.find_annual_deltas(building), :tax_values)
 
-    assert(ad_2012 == 0 && ad_2013 == 6_000 && ad_2014 == 1_000)
+    assert(ad_2012 == 0 && ad_2013 == -2_000 && ad_2014 == 1_000)
   end
 
   test "the truth" do
