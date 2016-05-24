@@ -4,17 +4,9 @@ defmodule TaxValue.DeltaFuns do
 	"""
 	@spec calc_value_delta(%TaxValue{}) :: %TaxValue{}
 	def calc_value_delta(tax_value) when is_map(tax_value) do
-		gross_value = Map.get(tax_value, :gross_value)
-		taxed_value = Map.get(tax_value, :taxed_value)
+		%TaxValue{gross_value: gross_value, taxed_value: taxed_value} = tax_value
 
-		%{ tax_value | 
-			value_delta: calc_value_delta(gross_value, taxed_value)
-		}
-	end
-
-	@spec calc_value_delta(number, number) :: number
-	defp calc_value_delta(gross_value, taxed_value) when is_number(gross_value) and is_number(taxed_value) do
-	 gross_value - taxed_value
+		%TaxValue{ tax_value | value_delta: gross_value - taxed_value }
 	end
 
 
@@ -26,7 +18,7 @@ defmodule TaxValue.DeltaFuns do
 
 	@spec calc_annual_deltas(%{integer => %TaxValue{}}) :: %{integer => %TaxValue{}}
 	def calc_annual_deltas(tax_values) when is_map(tax_values) do
-		years = 	Map.keys(tax_values) |> Enum.sort
+		years = Map.keys(tax_values) |> Enum.sort
 		calc_annual_deltas(years, tax_values, %{})
 	end
 
