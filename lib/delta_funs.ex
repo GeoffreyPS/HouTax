@@ -33,16 +33,19 @@ defmodule TaxValue.DeltaFuns do
 		state
 	end
 
-	defp calc_annual_deltas(years, tax_values, state) when 
-	is_list(years) and is_map(state) and map_size(state) == 0 do
+	defp calc_annual_deltas([first_year | _rest], tax_values, state) when 
+	 is_map(state) and map_size(state) == 0 do
 	
-		[first_year | _rest ] = years
 		new_state = %{state | first_year => tax_values[first_year] }
-		calc_annual_deltas(years, tax_values, new_state)
+		calc_annual_deltas([first_year | _rest], tax_values, new_state)
 	end
 
-	defp calc_annual_deltas(years, tax_values, state) do
-		[previous_year, current_year | rest] = years
+	defp calc_annual_deltas([previous_year, current_year | []], tax_values, state) do
+		new_state = %{state | current_year => calc_annual_delta(tax_values[current_year], tax_values[previous_year])}
+		calc_annual_deltas([], tax_values, new_state)
+	end
+
+	defp calc_annual_deltas([previous_year, current_year | rest], tax_values, state) do
 		new_state = %{state | current_year => calc_annual_delta(tax_values[current_year], tax_values[previous_year])}
 		calc_annual_deltas([current_year | rest], tax_values, new_state)
 	end
