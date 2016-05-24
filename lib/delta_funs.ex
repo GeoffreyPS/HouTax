@@ -33,20 +33,24 @@ defmodule TaxValue.DeltaFuns do
 		state
 	end
 
-	defp calc_annual_deltas([first_year | _rest], tax_values, state) when 
+	defp calc_annual_deltas([first_year | rest], tax_values, state) when 
 	 is_map(state) and map_size(state) == 0 do
-	
-		new_state = %{state | first_year => tax_values[first_year] }
-		calc_annual_deltas([first_year | _rest], tax_values, new_state)
+		new_state = Map.put_new(state, first_year, tax_values[first_year])
+		# new_state = %{state | first_year => tax_values[first_year] }
+		calc_annual_deltas([first_year | rest], tax_values, new_state)
 	end
 
 	defp calc_annual_deltas([previous_year, current_year | []], tax_values, state) do
-		new_state = %{state | current_year => calc_annual_delta(tax_values[current_year], tax_values[previous_year])}
+		new_tax = calc_annual_delta(tax_values[current_year], tax_values[previous_year])
+		new_state = Map.put_new(state, current_year, new_tax)
+		# new_state = %{state | current_year => calc_annual_delta(tax_values[current_year], tax_values[previous_year])}
 		calc_annual_deltas([], tax_values, new_state)
 	end
 
 	defp calc_annual_deltas([previous_year, current_year | rest], tax_values, state) do
-		new_state = %{state | current_year => calc_annual_delta(tax_values[current_year], tax_values[previous_year])}
+		new_tax = calc_annual_delta(tax_values[current_year], tax_values[previous_year])
+		new_state = Map.put_new(state, current_year, new_tax)
+		# new_state = %{state | current_year => calc_annual_delta(tax_values[current_year], tax_values[previous_year])}
 		calc_annual_deltas([current_year | rest], tax_values, new_state)
 	end
 
@@ -56,7 +60,6 @@ defmodule TaxValue.DeltaFuns do
 		
 		%TaxValue{taxed_value: current_tv} = tax_value_current
 		%TaxValue{taxed_value: previous_tv} = tax_value_previous 
-
 		%TaxValue{ tax_value_current | annual_delta: (current_tv - previous_tv) }		
 	end
 end
