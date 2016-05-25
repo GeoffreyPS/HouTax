@@ -4,6 +4,21 @@ defmodule TaxValue.DeltaFuns do
 	"""
 
 	@doc"""
+	Accepts a Building struct and returns a new Building with updated value_deltas for each tax year in :tax_values
+	"""
+	@spec find_value_deltas(%Building{}) :: %Building{}
+	def find_value_deltas(building) when is_map(building) do
+		%Building{tax_values: tax_values}	= building
+		%Building{building | tax_values: calc_value_deltas tax_values}	
+	end
+
+	@spec calc_value_deltas(%{integer => %TaxValue{}}) :: %{integer => %TaxValue{}}
+	defp calc_value_deltas(tax_values) do
+		years = Map.keys(tax_values)
+		Enum.reduce(years, %{}, fn(year, acc) -> Map.put_new(acc, year, calc_value_delta(tax_values[year])) end ) 
+	end
+
+	@doc"""
 	Sets the Value Delta for a TaxValue within a single year. 
 	"""
 	@spec calc_value_delta(%TaxValue{}) :: %TaxValue{}
