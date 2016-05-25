@@ -2,6 +2,11 @@ defmodule TaxValue.DeltaFuns do
 	@moduledoc"""
 	Functions for calculating the annual delta and value delta for a TaxValue.
 	"""
+	@doc"""
+	Accepts a Building struct and returns a new Building with all tax values updated
+	"""
+	@spec find_deltas(%Building{}) :: %Building{}
+	def find_deltas(building), do: building |> find_value_deltas |> find_annual_deltas
 
 	@doc"""
 	Accepts a Building struct and returns a new Building with updated value_deltas for each tax year in :tax_values
