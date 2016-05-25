@@ -2,11 +2,14 @@ defmodule TaxValue.DeltaFuns do
 	@moduledoc"""
 	Functions for calculating the annual delta and value delta for a TaxValue.
 	"""
+	#Public API
+
 	@doc"""
 	Accepts a Building struct and returns a new Building with all tax values updated
 	"""
 	@spec find_deltas(%Building{}) :: %Building{}
 	def find_deltas(building), do: building |> find_value_deltas |> find_annual_deltas
+
 
 	@doc"""
 	Accepts a Building struct and returns a new Building with updated value_deltas for each tax year in :tax_values
@@ -17,6 +20,19 @@ defmodule TaxValue.DeltaFuns do
 		%Building{building | tax_values: calc_value_deltas tax_values}	
 	end
 
+
+	@doc"""
+	Accepts a Building struct and returns a new Building with updated annual_deltas for each tax year in :tax_values.
+	"""
+	@spec find_annual_deltas(%Building{}) :: %Building{}
+	def find_annual_deltas(building) when is_map(building) do
+		%Building{tax_values: tax_values} = building
+
+		%Building{building | tax_values: calc_annual_deltas tax_values}
+	end
+
+
+	#Private Functions
 	@spec calc_value_deltas(%{integer => %TaxValue{}}) :: %{integer => %TaxValue{}}
 	defp calc_value_deltas(tax_values) do
 		years = Map.keys(tax_values)
@@ -30,16 +46,6 @@ defmodule TaxValue.DeltaFuns do
 		%TaxValue{ tax_value | value_delta: gross_value - taxed_value }
 	end
 
-
-	@doc"""
-	Accepts a Building struct that contains nested TaxValue structs and returns Building with Annual Delta fields calcualted.
-	"""
-	@spec find_annual_deltas(%Building{}) :: %Building{}
-	def find_annual_deltas(building) when is_map(building) do
-		%Building{tax_values: tax_values} = building
-
-		%Building{building | tax_values: calc_annual_deltas tax_values}
-	end
 
 	@spec calc_annual_deltas(%{integer => %TaxValue{}}) :: %{integer => %TaxValue{}}
 	defp calc_annual_deltas(tax_values) when is_map(tax_values) do
