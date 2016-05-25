@@ -23,11 +23,8 @@ defmodule TaxValue.DeltaFuns do
 		Enum.reduce(years, %{}, fn(year, acc) -> Map.put_new(acc, year, calc_value_delta(tax_values[year])) end ) 
 	end
 
-	@doc"""
-	Sets the Value Delta for a TaxValue within a single year. 
-	"""
 	@spec calc_value_delta(%TaxValue{}) :: %TaxValue{}
-	def calc_value_delta(tax_value) when is_map(tax_value) do
+	defp calc_value_delta(tax_value) when is_map(tax_value) do
 		%TaxValue{gross_value: gross_value, taxed_value: taxed_value} = tax_value
 
 		%TaxValue{ tax_value | value_delta: gross_value - taxed_value }
