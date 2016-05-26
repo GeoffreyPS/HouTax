@@ -8,7 +8,7 @@ defmodule CsvParse do
 	"""
 	@spec to_tax_value(map) :: %TaxValue{}
 	def to_tax_value(%{"Property_Class" => building_type, "GROSSVAL" => gross_value, "TAXVALUE" => taxed_value}) do
- 		tax_value = %TaxValue{building_type: building_type, gross_value: String.to_integer(gross_value), taxed_value: String.to_integer(taxed_value)}
+ 		 %TaxValue{building_type: building_type, gross_value: String.to_integer(gross_value), taxed_value: String.to_integer(taxed_value)}
 	end
 
 	@doc"""
@@ -16,7 +16,7 @@ defmodule CsvParse do
 	"""
 	@spec to_building(map) :: %Building{}
 	def to_building(%{"CAN" => id, "PNUMBER" => street_number, "PSTRNAME" => street_name, "ZIPCODE" => zip}) do
-		building = %Building{id: String.to_integer(id), street_number: String.to_integer(street_number), street_name: street_name,
+		%Building{id: String.to_integer(id), street_number: String.to_integer(street_number), street_name: street_name,
 												city: "Houston", zip: String.to_integer(zip)}
 	end
 
