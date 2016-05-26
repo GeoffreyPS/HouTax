@@ -13,11 +13,16 @@ defmodule CsvParseTest do
   	{:ok, row: row}
   end
 
-  test "to_tax_value returns a valid TaxValue", meta do
+  test "to_tax_value returns a TaxValue with non-nil value fields", meta do
   	tax_value = CsvParse.to_tax_value(meta[:row])
     refute Map.get(tax_value, :gross_value) == nil
   end
 
+
+  test "to_tax_value returns tax value fields as integers", meta do
+  	tax_value = CsvParse.to_tax_value(meta[:row])
+		for elem <- [:gross_value, :taxed_value], do: (Map.get(tax_value, elem) |> is_integer |> assert)
+  end
 
   test "to_building returns a valid Building", meta do
   	building = CsvParse.to_building(meta[:row])
