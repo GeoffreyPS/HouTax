@@ -17,4 +17,11 @@ defmodule CsvParseTest do
   	tax_value = CsvParse.to_tax_value(meta[:row])
     refute Map.get(tax_value, :gross_value) == nil
   end
+
+
+  test "to_building returns a valid Building", meta do
+  	building = CsvParse.to_building(meta[:row])
+  	refute Map.get(building, :street_name) == nil
+  end
+
 end
