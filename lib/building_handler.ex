@@ -12,7 +12,7 @@ defmodule BuildingHandler do
 # Callbacks
 	def init([dispatcher, config]) when is_pid(dispatcher) do
 		state = %State{}
-		init[config, state]
+		init([config], state)
 	end
 
 	def init([], state) do
