@@ -1,6 +1,7 @@
 defmodule BuildingHandler do
 	use GenServer
 	import Building
+	import Deserializer
 
 	defmodule State do
 		defstruct[:building]
@@ -28,5 +29,9 @@ defmodule BuildingHandler do
 		init(rest, state)
 	end
 
+	def handle_call({:tax_value, year, row}) when is_integer(year) and when is_map(row) do
+			Deserializer.to_tax_value(row)
+			Building.set_tax_year(state, row, year)
+	end
 
 end
