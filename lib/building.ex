@@ -54,4 +54,13 @@ defmodule Building do
 	@spec tax_value(%Building{}, integer) :: %TaxValue{}
 	def tax_value(%Building{tax_values: tax_values}, year), do: Map.get(tax_values, year)
 
+
+	@doc"""
+	Convenience function for adding a TaxValue to a Building
+	"""
+	@spec add_tax_value(%Building{}, integer, %TaxValue{}) :: %Building{}
+	def add_tax_value(building, year, tax_value) when is_map(building) and is_map(tax_value) and is_integer(year) do
+	 Map.put(building, year, tax_value)
+	end
+
 end
