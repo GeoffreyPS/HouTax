@@ -29,4 +29,9 @@ defmodule DeserializerTest do
   	refute Map.get(building, :street_name) == nil
   end
 
+  test "to_year returns a valid date", meta do
+    date = Deserializer.to_year(meta[:row])
+    assert date == 2012
+  end
+
 end
