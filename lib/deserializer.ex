@@ -20,10 +20,16 @@ defmodule Deserializer do
 												city: "Houston", zip: String.to_integer(zip)}
 	end
 
-	@spec building_with_value(map, integer) :: %Building{}
-	def building_with_value(row, year) do
+	@spec building_with_value(map) :: %Building{}
+	def building_with_value(row) do
 		building = to_building(row)
+		year = to_year(row)
 		%Building{building | tax_values: %{year => to_tax_value(row)} }
 	end
 
+	@spec to_year(%{String.t => String.t}) :: integer
+	def to_year(%{"DUEDATE" => date}) do
+		[match, year] = Regex.run(~r/\d{1,}\/\d{1,}\/(?<year>\d*)/, date)
+		String.to_integer(year) + 1999 		
+	end
 end
