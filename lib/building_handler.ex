@@ -4,7 +4,7 @@ defmodule BuildingHandler do
 	import Deserializer
 
 	defmodule State do
-		defstruct[:building]
+		defstruct building: %Building{}
 	end
 
 
@@ -12,16 +12,16 @@ defmodule BuildingHandler do
 
 # Callbacks
 	def init([dispatcher, config]) when is_pid(dispatcher) do
-		state = %State{}
-		init([config], state)
+		state = %State{building: %Building{}}
+		init(config, state)
 	end
 
 	def init([], state) do
 		{:ok, state}
 	end
 
-	def init([row: row, year: year | rest], state) do
-		%{state | building: Deserializer.building_with_value(csv_row, year)}
+	def init([{:row, row} | rest], state) do
+		%{state | building: Deserializer.building_with_value(row)}
 		init(rest, state)
 	end
 
@@ -29,9 +29,10 @@ defmodule BuildingHandler do
 		init(rest, state)
 	end
 
-	def handle_call({:tax_value, year, row}) when is_integer(year) and when is_map(row) do
-			Deserializer.to_tax_value(row)
-			Building.set_tax_year(state, row, year)
-	end
+	# def handle_call({:tax_value, row}) when is_map(row) do
+	# 		tax_value = Deserializer.to_tax_value(row)
+	# 		year = Deserializer.to_year(row)
+	# 		Building.set_tax_year(, year, tax_value)
+	# end
 
 end
