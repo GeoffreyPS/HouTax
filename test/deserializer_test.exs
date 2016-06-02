@@ -34,4 +34,10 @@ defmodule DeserializerTest do
     assert date == 2012
   end
 
+  test "building_with_value returns a valid building with correct tax value", meta do
+    building = Deserializer.building_with_value(meta[:row])
+    year = Map.get(building, :tax_values) |> Map.keys |> List.first
+    assert year == 2012
+  end
+
 end
