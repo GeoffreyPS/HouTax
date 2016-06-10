@@ -10,6 +10,15 @@ defmodule Building do
 	@type t :: %Building{id: String.t, street_number: integer, street_name: String.t, 
 											city: String.t, zip: integer, tax_values: %{integer => TaxValue}}
 
+	@doc"""
+	Initializes a new building with a CSV row. If given no arguments, a blank building struct will return.
+	""" 	
+	def new, do: %Building{}
+
+	@spec new(%{}) :: %Building{}
+	def new(csv_map) when is_map(csv_map) do
+		Deserializer.building_with_value(csv_map)
+	end
 
 	@doc"""
 	Convenience function for retreiving a Building's id
