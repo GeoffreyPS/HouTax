@@ -67,6 +67,13 @@ defmodule Building do
 	@doc"""
 	Convenience function for adding a TaxValue to a Building
 	"""
+	@spec add_tax_value(%Building{}, %{}) :: %Building{}
+	def add_tax_value(building, csv_row) when is_map(building) and is_map(csv_row) do
+		year = Deserializer.to_year(csv_row)
+		tax_value = Deserializer.to_tax_value(csv_row)
+		add_tax_value(building, year, tax_value)
+	end
+
 	@spec add_tax_value(%Building{}, integer, %TaxValue{}) :: %Building{}
 	def add_tax_value(building, year, tax_value) when is_map(building) and is_map(tax_value) and is_integer(year) do
 	 Map.put(building, year, tax_value)
