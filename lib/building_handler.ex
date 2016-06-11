@@ -3,36 +3,29 @@ defmodule BuildingHandler do
 	import Building
 	import Deserializer
 
-	defmodule State do
-		defstruct building: %Building{}
-	end
+# Interface
+	def put_row(pid, row), do: GenServer.cast(pid, {:put_row, row})
 
-
-
+	def inspect(pid), do: GenServer.call(pid, {:inspect})
 
 # Callbacks
-	def init([dispatcher, config]) when is_pid(dispatcher) do
-		state = %State{building: %Building{}}
-		init(config, state)
+	def init(_) do
+		{:ok, Building.new}
 	end
 
-	def init([], state) do
-		{:ok, state}
+
+	def handle_call({:inspect}, _, building) do
+		{:reply, IO.inspect(building), building}
 	end
 
-	def init([{:row, row} | rest], state) do
-		%{state | building: Deserializer.building_with_value(row)}
-		init(rest, state)
-	end
+	def handle_cast({:put_row, row}, building) when is_map(row) do
+		case building do
+			%Building{id: nil} ->
+				{:noreply, Building.new(row)}
 
-	def init([_ | rest], state) do
-		init(rest, state)
+			%Building{id: _} ->
+				{:noreply, Building.add_tax_value(building, row)}
+			end
 	end
-
-	# def handle_call({:tax_value, row}) when is_map(row) do
-	# 		tax_value = Deserializer.to_tax_value(row)
-	# 		year = Deserializer.to_year(row)
-	# 		Building.set_tax_year(, year, tax_value)
-	# end
 
 end
