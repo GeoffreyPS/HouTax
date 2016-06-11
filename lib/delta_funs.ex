@@ -76,6 +76,10 @@ defmodule TaxValue.DeltaFuns do
 		calc_annual_deltas([current_year | rest], tax_values, new_state)
 	end
 
+	defp calc_annual_deltas([only_year | []], tax_values, state) do
+		calc_annual_deltas([], tax_values, Map.put_new(state, only_year, tax_values[only_year]))
+	end
+
 	@spec calc_annual_delta(%TaxValue{}, %TaxValue{}) :: %TaxValue{}
 	defp calc_annual_delta(tax_value_current, tax_value_previous) when 
 	is_map(tax_value_current) and is_map(tax_value_previous) do

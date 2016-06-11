@@ -39,4 +39,15 @@ defmodule DeltaFunsTest do
       assert((vd_2012 == 2_000 && vd_2013 == 6_000 && vd_2014 == 4_000) && (ad_2012 == 0 && ad_2013 == -2_000 && ad_2014 == 1_000))
   end
 
+  test "function find_annual_deltas returns Building with Value Delta when given a Building with one Tax Year" do
+    %Building{tax_values: %{2012 => %TaxValue{annual_delta: annual_delta}}} = 
+    %Building{
+          tax_values: %{
+            2012 => %TaxValue{gross_value: 10_000, taxed_value: 8_000, value_delta: nil, annual_delta: 0}
+          }
+    } |> TaxValue.DeltaFuns.find_annual_deltas
+  
+    assert annual_delta == 0
+  end
+
 end
