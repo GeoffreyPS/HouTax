@@ -29,7 +29,7 @@ defmodule Deserializer do
 
 	@spec to_year(%{String.t => String.t}) :: integer
 	def to_year(%{"DUEDATE" => date}) do
-		[match, year] = Regex.run(~r/\d{1,}\/\d{1,}\/(?<year>\d*)/, date)
+		[_, year] = Regex.run(~r/\d{1,}\/\d{1,}\/(?<year>\d*)/, date)
 		String.to_integer(year) + 1999 		
 	end
 end
