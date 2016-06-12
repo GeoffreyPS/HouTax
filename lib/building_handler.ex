@@ -1,12 +1,12 @@
 defmodule BuildingHandler do
 	use GenServer
-	import Building
-	import Deserializer
 
 # Interface
 	def put_row(pid, row), do: GenServer.cast(pid, {:put_row, row})
 
 	def inspect(pid), do: GenServer.call(pid, {:inspect})
+
+	def report(pid), do: GenServer.call(pid, {:report})
 
 # Callbacks
 	def init(_) do
@@ -18,13 +18,18 @@ defmodule BuildingHandler do
 		{:reply, IO.inspect(building), building}
 	end
 
+	def handle_call({:report}, _, building) do
+		{:reply, TaxValue.DeltaFuns.find_deltas(building)}
+	end
+
 	def handle_cast({:put_row, row}, building) when is_map(row) do
 		case building do
 			%Building{id: nil} ->
 				{:noreply, Building.new(row)}
 
 			%Building{id: _} ->
-				{:noreply, Building.add_tax_value(building, row)}
+				state = building |> Building.add_tax_value(row) 
+				{:noreply, state}
 			end
 	end
 
