@@ -19,7 +19,7 @@ defmodule Building.Cache do
 				{:reply, building_pid, building_cache}
 
 			:error ->
-				{:ok, new_building} = BuildingHandler.start
+				{:ok, new_building} = Building.Server.start
 				{
 					:reply,
 					new_building,
