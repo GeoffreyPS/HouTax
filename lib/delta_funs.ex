@@ -1,4 +1,4 @@
-defmodule TaxValue.DeltaFuns do
+defmodule Building.DeltaFuns do
 	@moduledoc"""
 	Functions for calculating the annual delta and value delta for a TaxValue.
 	"""

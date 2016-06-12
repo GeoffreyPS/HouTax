@@ -1,4 +1,4 @@
-defmodule BuildingHandler do
+defmodule Building.Server do
 	use GenServer
 
 # Interface
@@ -21,7 +21,7 @@ defmodule BuildingHandler do
 	end
 
 	def handle_call({:report}, _, building) do
-		{:reply, TaxValue.DeltaFuns.find_deltas(building)}
+		{:reply, Building.DeltaFuns.find_deltas(building)}
 	end
 
 	def handle_cast({:put_row, row}, building) when is_map(row) do
