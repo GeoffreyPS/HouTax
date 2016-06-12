@@ -2,6 +2,8 @@ defmodule BuildingHandler do
 	use GenServer
 
 # Interface
+	def start, do: GenServer.start(__MODULE__, nil)
+
 	def put_row(pid, row), do: GenServer.cast(pid, {:put_row, row})
 
 	def inspect(pid), do: GenServer.call(pid, {:inspect})
@@ -33,4 +35,5 @@ defmodule BuildingHandler do
 			end
 	end
 
+	def handle_info(_, state), do: {:noreply, state}
 end
