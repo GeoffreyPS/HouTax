@@ -5,12 +5,12 @@ defmodule Building.Cache do
 		{:ok, Map.new}
 	end
 
-	def start do
-		GenServer.start(__MODULE__, nil)
+	def start_link do
+		GenServer.start_link(__MODULE__, nil, name: :building_cache)
 	end
 
-	def server_process(cache_pid, building_id) do
-		GenServer.call(cache_pid, {:server_process, building_id})
+	def server_process(building_id) do
+		GenServer.call(:building_cache, {:server_process, building_id})
 	end
 
 	def handle_call({:server_process, building_id}, _, building_cache) do
