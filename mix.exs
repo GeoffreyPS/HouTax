@@ -15,7 +15,7 @@ defmodule HouTax.Mixfile do
   # Type "mix help compile.app" for more information
   def application do
     [
-      applications: [:logger],
+      applications: [:logger, :gproc],
       mod: {HouTax, []}
     ]
   end
@@ -32,6 +32,7 @@ defmodule HouTax.Mixfile do
   defp deps do
     [ {:csv, "~> 1.4.0"},
       {:poison, "~> 2.0"},
+      {:gproc, "~> 0.5"},
       {:dialyxir, "~> 0.3", only: [:dev]}
     ]
   end
