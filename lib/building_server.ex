@@ -2,7 +2,10 @@ defmodule Building.Server do
 	use GenServer
 
 # Interface
-	def start_link, do: GenServer.start_link(__MODULE__, nil)
+	def start_link do
+		IO.puts "Starting #{__MODULE__}"
+		GenServer.start_link(__MODULE__, nil)
+	end
 
 	def put_row(pid, row), do: GenServer.cast(pid, {:put_row, row})
 
