@@ -12,7 +12,7 @@ If [available in Hex](https://hex.pm/docs/publish), the package can be installed
           [{:hou_tax, "~> 0.0.1"}]
         end
 
-  2. Ensure csv_parse is started before your application:
+  2. Ensure hou_tax is started before your application:
 
         def application do
           [applications: [:hou_tax]]
