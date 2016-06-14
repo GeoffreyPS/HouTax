@@ -1,6 +1,6 @@
 defmodule DeserializerTest do
   use ExUnit.Case
-  doctest CsvParse
+  doctest HouTax
 
   setup_all do
   	csv = "./data/2012.csv"

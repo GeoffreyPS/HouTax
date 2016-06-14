@@ -1,8 +1,8 @@
-defmodule CsvParse.Mixfile do
+defmodule HouTax.Mixfile do
   use Mix.Project
 
   def project do
-    [app: :csv_parse,
+    [app: :hou_tax,
      version: "0.0.1",
      elixir: "~> 1.2",
      build_embedded: Mix.env == :prod,

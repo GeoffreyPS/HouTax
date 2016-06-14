@@ -10,11 +10,11 @@ use Mix.Config
 
 # You can configure for your application as:
 #
-#     config :csv_parse, key: :value
+#     config :hou_tax, key: :value
 #
 # And access this configuration in your application as:
 #
-#     Application.get_env(:csv_parse, :key)
+#     Application.get_env(:hou_tax, :key)
 #
 # Or configure a 3rd-party app:
 #

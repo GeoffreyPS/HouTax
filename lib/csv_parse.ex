@@ -1,3 +1,0 @@
-defmodule CsvParse do
-	
-end
