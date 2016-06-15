@@ -16,9 +16,8 @@ defmodule HouTax.Reader do
 		GenServer.cast(:csv_reader, {:process, csv})
 	end
 
-	def handle_cast({:process, csv}) do
+	def handle_cast({:process, csv}, _state) do
 		csv
-		|> Path.expand(__DIR__)
 		|> File.stream!
 		|> CSV.decode(headers: true)
 		|> Enum.each(&delegate_building(&1))
@@ -35,9 +34,4 @@ defmodule HouTax.Reader do
 		Building.Server.put_row(pid, row)
 	end
 
-
 end
-
-
-
-# [ [h_2012 | t_2012] | [ 2013 [ 2014 [2015]]]]
