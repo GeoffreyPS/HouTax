@@ -32,4 +32,7 @@ defmodule Deserializer do
 		[_, year] = Regex.run(~r/\d{1,}\/\d{1,}\/(?<year>\d*)/, date)
 		String.to_integer(year) + 1999 		
 	end
+
+	@spec get_id(%{}) :: String.t
+	def get_id(%{"CAN" => id}), do: id
 end
