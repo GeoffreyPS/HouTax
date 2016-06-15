@@ -42,7 +42,7 @@ defmodule DeserializerTest do
 
   test "get_id returns a 13-digit string ID when given a CSV row", meta do
     id = Deserializer.get_id(meta[:row])
-    assert Regex.match?(~r/\d{13}/, "0150110000008")
+    assert Regex.match?(~r/\d{13}/, id)
   end
 
 end
