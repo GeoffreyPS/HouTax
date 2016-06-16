@@ -11,7 +11,12 @@ defmodule Building.Server do
 
 	def inspect(pid), do: GenServer.call(pid, {:inspect})
 
-	def report(pid), do: GenServer.call(pid, {:report})
+	def report(pid) when is_pid(pid), do: GenServer.call(pid, {:report})
+
+	def report(building_id) do
+		pid = Building.Cache.server_process(building_id)
+		GenServer.call(pid, {:report})
+	end
 
 	def where_is(building_id) do
 		:gproc.whereis_name({:n, :l, {:building_server, building_id}})
