@@ -2,9 +2,9 @@ defmodule Building.Server do
 	use GenServer
 
 # Interface
-	def start_link do
+	def start_link(building_id) do
 		IO.puts "Starting #{__MODULE__}"
-		GenServer.start_link(__MODULE__, nil)
+		GenServer.start_link(__MODULE__, building_id, name: via_tuple(building_id))
 	end
 
 	def put_row(pid, row), do: GenServer.cast(pid, {:put_row, row})
@@ -12,6 +12,10 @@ defmodule Building.Server do
 	def inspect(pid), do: GenServer.call(pid, {:inspect})
 
 	def report(pid), do: GenServer.call(pid, {:report})
+
+	def where_is(building_id) do
+		:gproc.whereis_name({:n, :l, {:building_server, building_id}})
+	end
 
 # Callbacks
 	def init(_) do
@@ -40,4 +44,9 @@ defmodule Building.Server do
 	end
 
 	def handle_info(_, state), do: {:noreply, state}
+
+	defp via_tuple(building_id) do
+		{:via, :gproc, {:n, :l, {:building_server, building_id}}}
+	end
+
 end

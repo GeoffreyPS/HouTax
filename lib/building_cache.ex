@@ -2,7 +2,7 @@ defmodule Building.Cache do
 	use GenServer
 
 	def init(_) do
-		{:ok, Map.new}
+		{:ok, nil}
 	end
 
 	def start_link do
@@ -11,21 +11,22 @@ defmodule Building.Cache do
 	end
 
 	def server_process(building_id) do
-		GenServer.call(:building_cache, {:server_process, building_id})
+		case Building.Server.where_is(building_id) do
+			:undefined ->
+				GenServer.call(:building_cache, {:server_process, building_id})
+			pid -> pid
+		end
 	end
 
-	def handle_call({:server_process, building_id}, _, building_cache) do
-		case Map.fetch(building_cache, building_id) do
-			{:ok, building_pid} ->
-				{:reply, building_pid, building_cache}
+	def handle_call({:server_process, building_id}, _, state) do
+		building_server_pid = case Building.Server.where_is(building_id) do
+			:undefined -> 
+				{:ok, pid} = Building.ServerSupervisor.start_child(building_id)
+				pid
 
-			:error ->
-				{:ok, new_building} = Building.Server.start_link
-				{
-					:reply,
-					new_building,
-					Map.put(building_cache, building_id, new_building)
-				}
+			pid -> pid
 		end
+
+		{:reply, building_server_pid, state}
 	end
 end
