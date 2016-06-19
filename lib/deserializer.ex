@@ -27,10 +27,10 @@ defmodule Deserializer do
 		%Building{building | tax_values: %{year => to_tax_value(row)} }
 	end
 
-	@spec to_year(%{String.t => String.t}) :: integer
+	@spec to_year(%{String.t => String.t}) :: String.t
 	def to_year(%{"DUEDATE" => date}) do
 		[_, year] = Regex.run(~r/\d{1,}\/\d{1,}\/(?<year>\d*)/, date)
-		String.to_integer(year) + 1999 		
+		String.to_integer(year) + 1999 |> Integer.to_string		
 	end
 
 	@spec get_id(%{}) :: String.t

@@ -9,7 +9,8 @@ defmodule HouTax.Supervisor do
 	def init(_) do
 		processes = [ 
 			supervisor(Buildings.Supervisor, []),
-			worker(HouTax.Reader, [])
+			worker(HouTax.Reader, []),
+			worker(HouTax.Writer,[])
 		]
 		supervise(processes, strategy: :one_for_one)
 	end
