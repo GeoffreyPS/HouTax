@@ -18,6 +18,11 @@ defmodule Building.Server do
 		GenServer.call(pid, {:report})
 	end
 
+	def write(building_id) do
+		pid = Building.Cache.server_process(building_id)
+		GenServer.cast(pid, {:write})
+	end
+
 	def where_is(building_id) do
 		:gproc.whereis_name({:n, :l, {:building_server, building_id}})
 	end
@@ -35,6 +40,16 @@ defmodule Building.Server do
 	def handle_call({:report}, _, building) do
 		new_building = Building.DeltaFuns.find_deltas(building)
 		{:reply, new_building, new_building}
+	end
+
+	def handle_cast({:write}, building) do
+		new_building = Building.DeltaFuns.find_deltas(building)
+
+		new_building
+			|> Building.to_json
+			|> HouTax.Writer.write
+
+		{:noreply, new_building}
 	end
 
 	def handle_cast({:put_row, row}, building) when is_map(row) do

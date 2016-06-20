@@ -23,9 +23,7 @@ defmodule HouTax do
 	end
 
 	def to_json(building_id) do
-		report(building_id)
-		|> Building.to_json
-		|>HouTax.Writer.write
+		Building.Server.write(building_id)
 	end
 
 end

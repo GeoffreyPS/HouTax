@@ -83,5 +83,6 @@ defmodule Building do
 
 	def to_json(building) do
 		Poison.Encoder.encode(building, [])
+		|> List.replace_at(-1, ',\n')
 	end
 end
