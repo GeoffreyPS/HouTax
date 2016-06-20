@@ -68,8 +68,13 @@ defmodule Building.Server do
 	end
 
 	def handle_cast({:register}, state) do
-		:pg2.join(:buildings, self)
-		{:noreply, state}
+		case :pg2.join(:buildings, self) do
+			:ok ->
+				{:noreply, state}
+
+			{:error, reason} ->
+				{:error, reason}
+		end
 	end
 
 	def handle_cast({:put_row, row}, building) when is_map(row) do

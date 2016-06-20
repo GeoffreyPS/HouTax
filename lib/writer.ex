@@ -23,9 +23,6 @@ defmodule HouTax.Writer do
 		case IO.write(file, building) do
 			:ok ->
 				{:reply, :ok, file}
-
-			:error ->
-				{:reply, {:error, "Bad Write"}, file}
 		end
 	end
 
