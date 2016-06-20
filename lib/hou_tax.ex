@@ -26,4 +26,8 @@ defmodule HouTax do
 		Building.Server.write(building_id)
 	end
 
+	def write_all(group) do
+		HouTax.Writer.write_all(group)
+	end
+
 end
