@@ -1,5 +1,8 @@
 %{"csv": {:hex, :csv, "1.4.1", "8b3a3bc9350ba04532f452c607aa24d59de03a36a2838b1ea17c274646e2f3d5", [:mix], [{:parallel_stream, "~> 1.0.3", [hex: :parallel_stream, optional: false]}]},
   "dialyxir": {:hex, :dialyxir, "0.3.3", "2f8bb8ab4e17acf4086cae847bd385c0f89296d3e3448dc304c26bfbe4b46cb4", [:mix], []},
   "gproc": {:hex, :gproc, "0.5.0", "2df2d886f8f8a7b81a4b04aa17972b5965bbc5bf0100ea6d8e8ac6a0e7389afe", [:rebar], []},
+  "hamcrest": {:git, "https://github.com/hyperthunk/hamcrest-erlang.git", "908a24fda4a46776a5135db60ca071e3d783f9f6", [branch: "master"]},
+  "meck": {:git, "https://github.com/eproxus/meck.git", "17b0ea5b7d9c93af3a52b5152c6bee14302b3885", [tag: "0.8.3"]},
   "parallel_stream": {:hex, :parallel_stream, "1.0.3", "773ee166669eb21b5297ce41b3c7b474be096eb8ed052d457081289a1cf2507a", [:mix], []},
-  "poison": {:hex, :poison, "2.1.0", "f583218ced822675e484648fa26c933d621373f01c6c76bd00005d7bd4b82e27", [:mix], []}}
+  "poison": {:hex, :poison, "2.1.0", "f583218ced822675e484648fa26c933d621373f01c6c76bd00005d7bd4b82e27", [:mix], []},
+  "revolver": {:git, "https://github.com/odo/revolver.git", "0ca2e3d6b216024ecee17360df20b096507dbc41", []}}

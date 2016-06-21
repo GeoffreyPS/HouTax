@@ -33,7 +33,8 @@ defmodule HouTax.Mixfile do
     [ {:csv, "~> 1.4.0"},
       {:poison, "~> 2.0"},
       {:gproc, "~> 0.5"},
-      {:dialyxir, "~> 0.3", only: [:dev]}
+      {:dialyxir, "~> 0.3", only: [:dev]},
+      {:revolver, github: "odo/revolver" }
     ]
   end
 end
