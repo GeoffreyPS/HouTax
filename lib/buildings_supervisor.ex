@@ -8,8 +8,7 @@ defmodule Buildings.Supervisor do
 
 	def init(_) do
 		processes = [
-			supervisor(Building.ServerSupervisor, []),
-			worker(Building.Cache, [])
+			supervisor(Building.ServerSupervisor, [])
 		]
 		supervise(processes, strategy: :one_for_one)
 	end

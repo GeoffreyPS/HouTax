@@ -9,6 +9,7 @@ defmodule HouTax.Supervisor do
 	def init(_) do
 		:pg2.create(:buildings)
 		processes = [ 
+			worker(Building.Cache, []),
 			supervisor(Buildings.Supervisor, []),
 			worker(HouTax.Reader, []),
 			worker(HouTax.Writer,[])
