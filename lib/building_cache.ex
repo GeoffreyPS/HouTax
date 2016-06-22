@@ -21,7 +21,8 @@ defmodule Building.Cache do
 	def handle_call({:server_process, building_id}, _, state) do
 		building_server_pid = case Building.Server.where_is(building_id) do
 			:undefined -> 
-				{:ok, pid} = Building.ServerSupervisor.start_child(building_id)
+				supervisor = :revolver.pid(:buildings_server_supervisors)
+				{:ok, pid} = Building.ServerSupervisor.start_child(supervisor, building_id)
 				pid
 
 			pid -> pid
