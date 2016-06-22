@@ -8,7 +8,7 @@ defmodule HouTax do
 	
 	def process(csv) when is_binary(csv) do
 		csv
-		|> Path.expand(__DIR__)
+		# |> Path.expand(__DIR__)
 		|> HouTax.Reader.process
 	end
 

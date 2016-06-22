@@ -7,7 +7,9 @@ defmodule HouTax.Mixfile do
      elixir: "~> 1.2",
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
-     deps: deps]
+     deps: deps,
+     escript: escript
+   ]
   end
 
   # Configuration for the OTP application
@@ -15,9 +17,13 @@ defmodule HouTax.Mixfile do
   # Type "mix help compile.app" for more information
   def application do
     [
-      applications: [:logger, :gproc],
+      applications: [:logger, :gproc, :revolver],
       mod: {HouTax, []}
     ]
+  end
+
+  def escript do
+    [main_module: HouTax.CLI]
   end
 
   # Dependencies can be Hex packages:
