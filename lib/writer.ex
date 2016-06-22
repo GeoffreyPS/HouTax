@@ -11,7 +11,7 @@ defmodule HouTax.Writer do
 	end
 
 	def write_all(group) do
-		GenServer.cast(:writer, {:write_all, group})
+		GenServer.call(:writer, {:write_all, group})
 	end
 
 	def init(_) do
@@ -26,13 +26,13 @@ defmodule HouTax.Writer do
 		end
 	end
 
-	def handle_cast({:write_all, group}, file) do
+	def handle_call({:write_all, group}, _, file) do
 		json = :pg2.get_members(group)
 						|> Stream.map(&(Building.Server.to_json(&1)))
 
 		Enum.each(json, &(IO.write(file, &1)))
 		IO.puts "Finished write!"
-		{:noreply, file}
+		{:reply, :ok, file}
 	end
 
 	def handle_info(_, state), do: {:noreply, state}
