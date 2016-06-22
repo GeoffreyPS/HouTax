@@ -13,18 +13,18 @@ defmodule HouTax.Reader do
 	end
 
 	def process(csv) do
-		GenServer.cast(:csv_reader, {:process, csv})
+		GenServer.call(:csv_reader, {:process, csv})
 	end
 
-	def handle_cast({:process, csv}, _state) do
+	def handle_call({:process, csv}, _, state) do
 		csv
 		|> File.stream!
 		|> CSV.decode(headers: true)
 		|> Enum.each(&delegate_building(&1))
-		{:noreply, nil}
+		{:reply, :ok, state}
 	end
 
-	def handle_info(_, state) do
+	def handle_info(_, _state) do
 		{:noreply, nil}
 	end
 
