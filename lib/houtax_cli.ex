@@ -1,14 +1,52 @@
 defmodule HouTax.CLI do
 	
-	def main(args) do
-		{parsed_args, _remaining_args, _invalid_args} = OptionParser.parse(args)
-		run(parsed_args)
+	# def main(args) do
+	# 	{parsed_args, _remaining_args, _invalid_args} = OptionParser.parse(args)
+	# 	check_path(parsed_args)
+	# end
+
+
+  def main(args) do
+    args |> parse_args |> do_process
+  end
+
+  def parse_args(args) do
+    options = OptionParser.parse(args)
+
+    case options do
+      {[path: path], _, _} -> [path]
+      {[help: true], _, _} -> :help
+      {[h: true], _, _} 	-> :help
+      _ -> :help
+    end
+  end
+
+
+	def do_process([path]) do
+		File.cd(path)
+		case File.ls do
+			{:ok, files} -> 
+				run(files)
+			{:error, reason} ->
+				IO.puts "Encountered an error:\n
+								#{reason}"
+		end
 	end
 
-	def run([{:path, path} | _rest]) do
-		File.cd(path)
-		{:ok, files} = File.ls
+	def do_process(:help) do
+		IO.puts """
+		Welcome to HouTax.
 
+		Usage:
+		./hou_tax --path path/to/csvs
+
+		Description:
+		Given a path to a directory containing .csv files of annual Houston Tax Roll data, HouTax will deserialize the data and reserialize key information as JSON into a file labeled 'houtax_export.json'. The new information contains the difference in appraised value and taxed value for each year, as well as the difference in tax value from previous years.
+		"""
+	end
+
+
+	def run(files) do
 		csvs = files
 					|> filter_csvs
 					|> get_paths
@@ -31,72 +69,5 @@ defmodule HouTax.CLI do
 		paths = for csv <- csvs, do: new_path <> "/" <> csv
 		Enum.map(paths, &Path.expand(&1, __DIR__))
 	end
-
-	# def await(group, files) do
-	# 		unless minimum_processes_reached?(group, files)
-	# 			do Process.sleep(100)
-	# 				await(group, files)
-	# 		else 
-	# 			Process.sleep(500)
-	# 	end
-	# end
-
-
-	# def await(group, files) do
-	# 	cond do
-	#   	still_growing?(group) ->
-	# 			await(group, files)
-
-	# 	  minimum_processes_reached?(group, files) -> 
-	# 	  	Process.sleep(div(at_least(files), 10))
-
-	# 		true ->
-	# 			await(group, files)		    
-	# 	end
-	# end
-
-	# def still_growing?(group) do
-	# 	gs1 = group_size(group)
-	# 	Process.sleep(50)
-	# 	gs2 = group_size(group)
-
-	# 	gs1 < gs2
-	# end
-
-	# def minimum_processes_reached?(group, files) do
-	# 	group_size(group) >= at_least(files)
-	# end
-
-
-	# defp group_size(group) do
-	# 	:pg2.get_members(group)
-	# 	|> length
-	# end
-
-	# defp at_least(files) do
-	# 	[filename: filename, size: _size] = largest_file files
-		
-	# 	filename 
-	# 	|> File.stream! 
-	# 	|> Enum.to_list 
-	# 	|> length
-	# end
-
-	# defp largest_file(files) do
-	# 	Enum.max_by(files, &size(&1))
-	# 	|> file_name_size
-	# end
-
-	# defp size(file) do
-	# 	{:ok, stat} = File.stat(file)	
-	# 	%{size: size} = stat	
-	# 	size
-	# end
-
-	# defp file_name_size(file) do
-	# 	{:ok, stat} = File.stat(file)	
-	# 	%{size: size} = stat	
-	# 	[filename: file, size: size]
-	# end
 
 end
