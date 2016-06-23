@@ -3,11 +3,11 @@ defmodule Building.Server do
 
 # Interface
 	def start_link(building_id) do
-		IO.puts "Starting #{__MODULE__}"
+		# IO.puts "Starting #{__MODULE__}"
 		GenServer.start_link(__MODULE__, building_id, name: via_tuple(building_id))
 	end
 
-	def put_row(pid, row), do: GenServer.cast(pid, {:put_row, row})
+	def put_row(pid, row), do: GenServer.call(pid, {:put_row, row})
 
 	def inspect(pid), do: GenServer.call(pid, {:inspect})
 
@@ -57,6 +57,17 @@ defmodule Building.Server do
 		{:reply, json, building}
 	end
 
+	def handle_call({:put_row, row}, _, building) when is_map(row) do
+		case building do
+			%Building{id: nil} ->
+				{:reply, :ok, Building.new(row)}
+
+			%Building{id: _} ->
+				state = building |> Building.add_tax_value(row) 
+				{:reply, :ok, state}
+			end
+	end
+
 	def handle_cast({:write}, building) do
 		new_building = Building.DeltaFuns.find_deltas(building)
 
@@ -77,16 +88,6 @@ defmodule Building.Server do
 		end
 	end
 
-	def handle_cast({:put_row, row}, building) when is_map(row) do
-		case building do
-			%Building{id: nil} ->
-				{:noreply, Building.new(row)}
-
-			%Building{id: _} ->
-				state = building |> Building.add_tax_value(row) 
-				{:noreply, state}
-			end
-	end
 
 	def handle_info(_, state), do: {:noreply, state}
 
