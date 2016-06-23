@@ -31,13 +31,13 @@ defmodule DeserializerTest do
 
   test "to_year returns a valid date", meta do
     date = Deserializer.to_year(meta[:row])
-    assert date == 2012
+    assert date == "2012"
   end
 
   test "building_with_value returns a valid building with correct tax value", meta do
     building = Deserializer.building_with_value(meta[:row])
     year = Map.get(building, :tax_values) |> Map.keys |> List.first
-    assert year == 2012
+    assert year == "2012"
   end
 
   test "get_id returns a 13-digit string ID when given a CSV row", meta do
