@@ -13,7 +13,7 @@ defmodule HouTax.Reader do
 	end
 
 	def process(csv) do
-		GenServer.call(:csv_reader, {:process, csv})
+		GenServer.call(:csv_reader, {:process, csv}, 20_000)
 	end
 
 	def handle_call({:process, csv}, _, state) do
