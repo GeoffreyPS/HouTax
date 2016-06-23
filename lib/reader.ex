@@ -4,7 +4,6 @@ defmodule HouTax.Reader do
 	require Deserializer
 
 	def start_link do
-		IO.puts "Starting #{__MODULE__}"
 		GenServer.start_link(__MODULE__, nil, name: :csv_reader)
 	end
 

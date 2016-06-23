@@ -1,10 +1,4 @@
 defmodule HouTax.CLI do
-	
-	# def main(args) do
-	# 	{parsed_args, _remaining_args, _invalid_args} = OptionParser.parse(args)
-	# 	check_path(parsed_args)
-	# end
-
 
   def main(args) do
     args |> parse_args |> do_process

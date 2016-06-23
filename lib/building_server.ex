@@ -3,7 +3,6 @@ defmodule Building.Server do
 
 # Interface
 	def start_link(building_id) do
-		# IO.puts "Starting #{__MODULE__}"
 		GenServer.start_link(__MODULE__, building_id, name: via_tuple(building_id))
 	end
 

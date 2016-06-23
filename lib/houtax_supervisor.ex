@@ -2,7 +2,6 @@ defmodule HouTax.Supervisor do
 	use Supervisor
 
 	def start_link do
-		IO.puts "Starting #{__MODULE__}"
 		Supervisor.start_link(__MODULE__, nil, name: :houtax_supervisor)
 	end
 
