@@ -2,7 +2,6 @@ defmodule Buildings.Supervisor do
 	use Supervisor
 
 	def start_link(pool_size \\ 20) do
-		IO.puts "Starting #{__MODULE__}"
 		Supervisor.start_link(__MODULE__, {pool_size}, name: :buildings_supervisor)
 	end
 

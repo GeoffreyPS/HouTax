@@ -2,7 +2,6 @@ defmodule HouTax.Writer do
 	use GenServer
 
 	def start_link do
-		IO.puts "Starting #{__MODULE__}"
 		GenServer.start_link(__MODULE__, nil, name: :writer)
 	end
 
