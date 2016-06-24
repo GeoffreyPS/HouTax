@@ -66,4 +66,4 @@ iex(7)>
 - For the full datasets, tweaks might need to be made to the BEAM/VM to allow 750,000+ processes for it all to run, plus timeout defaults might need to be changed. However, for the sample dataset of 20k+ properties, this technique works fine. Alternatively one could solve this problem with a pool of workers and caching the property information in an ETS table.
 
 
-- [Saša Jurić](https://github.com/sasa1977)'s book [Elixir in Action] provided the model for much of this exercise, with a few departures. [Benjamin Tan Wei Hao](https://github.com/benjamintanweihao)'s forthcoming book [The Little Elixir and OTP Guidebook](https://www.manning.com/books/the-little-elixir-and-otp-guidebook) was also very helpful.
+- [Saša Jurić](https://github.com/sasa1977)'s book [Elixir in Action](https://www.manning.com/books/elixir-in-action) provided the model for much of this exercise, with a few departures. [Benjamin Tan Wei Hao](https://github.com/benjamintanweihao)'s forthcoming book [The Little Elixir and OTP Guidebook](https://www.manning.com/books/the-little-elixir-and-otp-guidebook) was also very helpful.
