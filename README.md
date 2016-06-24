@@ -11,13 +11,14 @@ This application reads property/building tax data from the City of Houston's Tax
 2. Clone this repository into a working directory `git clone git@github.com:GeoffreyPS/HouTax.git`.
 
 
-3. CD into the cloned repository and fetch dependencies with `mix deps.get` if you don't already have the [Hex package installer](https://hex.pm/), you will be prompted to install it as well.
+3. CD into the cloned repository and fetch dependencies with `mix deps.get` if you don't already have the [Hex package manager](https://hex.pm/), you will be prompted to install it as well.
 
 
 4. Build the application with `mix escript.build`
 
 ## To Run
 If you already have any instance of Erlang installed on your machine, you can run the CLI without futzing around with installing Elixir or the project's dependencies.
+
 1. Enter `./hou_tax` for help or `./hou_tax --path path/to/csvs` to get the application started.
 
 
@@ -29,7 +30,7 @@ If you already have any instance of Erlang installed on your machine, you can ru
 ## To Look Under the Hood
 You must have done steps 1-3 of To Build to do this part.
 
-1. Cd into the cloned repository and run `iex -S mix`. This starts the application in iex, Elixir's REPL.
+1. CD into the cloned repository and run `iex -S mix`. This starts the application in iex, Elixir's REPL.
 
 
 2. Enter `:observer.start` to see the process tree started by the application in a GUI.
