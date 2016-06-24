@@ -3,7 +3,7 @@ defmodule DeserializerTest do
   doctest HouTax
 
   setup_all do
-  	csv = "./data/2012.csv"
+  	csv = "./data/100/2012.csv"
   	row = csv
   				|> Path.expand(__DIR__)
   				|> File.stream!
