@@ -1,6 +1,9 @@
 # HouTax
 OTP and ETL demo with a command line interface using Elixir. Original open dataset from [City of Houston's Tax Rolls by Year](http://data.ohouston.org/dataset/city-of-houston-property-tax-rolls-by-year).
 
+## But What Does It _Do_?
+This application reads property/building tax data from the City of Houston's Tax Rolls by Year as csvs. For each building and each year that record of that property exists, the application will calculate how much the building's value increased or decreased. This data is then serialized as JSON and written to disk in a single export file.
+
 ## To Build
 1. [Install Erlang and Elixir](http://elixir-lang.org/install.html)
 
