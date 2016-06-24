@@ -11,7 +11,7 @@ defmodule HouTax.Writer do
 	end
 
 	def write_all(group) do
-		GenServer.call(:writer, {:write_all, group})
+		GenServer.call(:writer, {:write_all, group}, 15_000)
 	end
 
 	def init(_) do
