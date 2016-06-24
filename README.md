@@ -33,26 +33,24 @@ You must have done steps 1-3 of To Build to do this part.
 
 
 2. Enter `:observer.start` to see the process tree started by the application in a GUI.
+![application tree](https://raw.githubusercontent.com/GeoffreyPS/HouTax/master/observer.png)
 
 ```elixir
+$ iex -S mix
 Erlang/OTP 18 [erts-7.3] [source] [64-bit] [smp:4:4] [async-threads:10] [hipe] [kernel-poll:false] [dtrace]
 
-Starting Elixir.HouTax
-Starting Elixir.Building.Cache
-Starting Elixir.Buildings.Supervisor
-Starting Elixir.HouTax.Writer
 Interactive Elixir (1.3.0) - press Ctrl+C to exit (type h() ENTER for help)
 iex(1)> :observer.start
 :ok
-iex(2)> File.cd "./test/data/20k"
+iex(2)> File.cd "./test/data/100"
 :ok
 iex(3)> {:ok, files} = File.ls
-{:ok, ["2012_20k.csv", "2013_20k.csv", "2014_20k.csv", "2015_20k.csv"]}
+{:ok, ["2012.csv", "2013.csv", "2014.csv", "2015.csv"]}
 iex(4)> csvs = Enum.map(files, &(Path.expand(&1, __DIR__)))
-["/Users/geoff/Projects/sandbox/elixir-learning/HouTax/test/data/20k/2012_20k.csv",
- "/Users/geoff/Projects/sandbox/elixir-learning/HouTax/test/data/20k/2013_20k.csv",
- "/Users/geoff/Projects/sandbox/elixir-learning/HouTax/test/data/20k/2014_20k.csv",
- "/Users/geoff/Projects/sandbox/elixir-learning/HouTax/test/data/20k/2015_20k.csv"]
+["/Users/geoff/Projects/sandbox/elixir-learning/HouTax/test/data/100/2012.csv",
+ "/Users/geoff/Projects/sandbox/elixir-learning/HouTax/test/data/100/2013.csv",
+ "/Users/geoff/Projects/sandbox/elixir-learning/HouTax/test/data/100/2014.csv",
+ "/Users/geoff/Projects/sandbox/elixir-learning/HouTax/test/data/100/2015.csv"]
 iex(5)> HouTax.process csvs
 [:ok, :ok, :ok, :ok]
 iex(6)> HouTax.write_all
